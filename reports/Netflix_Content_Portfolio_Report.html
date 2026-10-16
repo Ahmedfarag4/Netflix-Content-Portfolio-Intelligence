@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Netflix Content Portfolio Intelligence</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px;
+            line-height: 1.6;
+            color: #222;
+            background: #fff;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+            border-bottom: 3px solid #E50914;
+            padding-bottom: 12px;
+        }
+
+        h2 {
+            margin-top: 38px;
+            font-size: 24px;
+            color: #111;
+        }
+
+        h3 {
+            margin-top: 25px;
+        }
+
+        p {
+            font-size: 15px;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        code {
+            background: #f3f3f3;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        @media print {
+            body {
+                padding: 25px;
+            }
+
+            h2 {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Netflix Content Portfolio Intelligence</h1>
+<h2>Executive Analytical Report</h2>
+<h2>1. Executive Summary</h2>
+<p>This project analyzes a historical Netflix catalog dataset to understand content composition, market distribution, audience segments, genres, historical trends, and content characteristics.</p>
+<p>The raw dataset contained 8,790 records. After data quality checks and business-level duplicate removal, the final cleaned dataset contained 8,787 unique content records.</p>
+<p>The analysis shows that Movies dominate the catalog, accounting for approximately 69.7% of titles, while TV Shows represent approximately 30.3%.</p>
+<p>The United States is the largest represented market in the dataset, while content strategy differs significantly across countries. Some markets are strongly Movie-oriented, while others are dominated by TV Shows.</p>
+<p>Audience analysis indicates that Mature and Teen-oriented content represent the largest portions of the catalog.</p>
+<p>Genre patterns also vary significantly between Movies and TV Shows. Movies are strongly represented by International Movies, Dramas, and Comedies, while TV Shows show broader representation across TV Dramas, TV Comedies, Crime TV Shows, Kids' TV, and International TV Shows.</p>
+<p>The project also identified that approximately 63% of titles were added to Netflix within two years of release, indicating a strong concentration of relatively recent content while maintaining a meaningful long-tail of older titles.</p>
+<hr />
+<h2>2. Project Objective</h2>
+<p>The objective of this project is to transform raw Netflix catalog metadata into a structured analytical product that supports portfolio-level content analysis.</p>
+<p>The analysis focuses on:</p>
+<ul>
+<li>Content composition</li>
+<li>Geographic market distribution</li>
+<li>Historical content trends</li>
+<li>Audience segmentation</li>
+<li>Genre structure</li>
+<li>Movie duration</li>
+<li>TV Show season distribution</li>
+<li>Content age</li>
+<li>Cross-market audience differences</li>
+</ul>
+<hr />
+<h2>3. Dataset Overview</h2>
+<p>The raw dataset contains:</p>
+<ul>
+<li>8,790 records</li>
+<li>10 original columns</li>
+</ul>
+<p>Main fields include:</p>
+<ul>
+<li>show_id</li>
+<li>type</li>
+<li>title</li>
+<li>director</li>
+<li>country</li>
+<li>date_added</li>
+<li>release_year</li>
+<li>rating</li>
+<li>duration</li>
+<li>listed_in</li>
+</ul>
+<p>The dataset covers:</p>
+<ul>
+<li>Release years from 1925 to 2021</li>
+<li>Netflix addition years from 2008 to 2021</li>
+</ul>
+<p>This is a historical dataset and should not be interpreted as representing the current Netflix catalog.</p>
+<hr />
+<h2>4. Data Quality Assessment</h2>
+<p>Initial null-value checks showed no technical missing values.</p>
+<p>However, deeper semantic inspection identified missing information stored as text:</p>
+<ul>
+<li>2,588 director values represented as "Not Given"</li>
+<li>287 country values represented as "Not Given"</li>
+</ul>
+<p>Duplicate analysis identified:</p>
+<ul>
+<li>0 exact duplicate rows</li>
+<li>6 rows representing 3 duplicated content records with different show_id values</li>
+</ul>
+<p>After removing business duplicates:</p>
+<ul>
+<li>Final cleaned records: 8,787</li>
+</ul>
+<p>The cleaning process also included:</p>
+<ul>
+<li>Datetime conversion</li>
+<li>Duration parsing</li>
+<li>Semantic missing-value handling</li>
+<li>Genre extraction</li>
+<li>Feature engineering</li>
+<li>Final validation</li>
+</ul>
+<hr />
+<h2>5. Feature Engineering</h2>
+<p>The following analytical features were created:</p>
+<ul>
+<li>year_added</li>
+<li>month_added</li>
+<li>duration_value</li>
+<li>duration_unit</li>
+<li>content_age_at_addition</li>
+<li>content_age_valid</li>
+<li>director_clean</li>
+<li>country_clean</li>
+<li>audience_group</li>
+<li>content_age_group</li>
+</ul>
+<p>A separate exploded genre dataset was created to support accurate genre-level analysis.</p>
+<hr />
+<h2>6. Content Portfolio Overview</h2>
+<p>The cleaned catalog contains:</p>
+<ul>
+<li>6,124 Movies</li>
+<li>2,663 TV Shows</li>
+</ul>
+<p>This means:</p>
+<ul>
+<li>Movies: approximately 69.7%</li>
+<li>TV Shows: approximately 30.3%</li>
+</ul>
+<p>The catalog is therefore strongly Movie-oriented overall.</p>
+<hr />
+<h2>7. Geographic Market Analysis</h2>
+<p>The largest represented markets are:</p>
+<ol>
+<li>United States</li>
+<li>India</li>
+<li>United Kingdom</li>
+<li>Pakistan</li>
+<li>Canada</li>
+<li>Japan</li>
+<li>South Korea</li>
+<li>France</li>
+<li>Spain</li>
+<li>Mexico</li>
+</ol>
+<p>The United States is the dominant market by title count.</p>
+<p>However, the content mix differs significantly across markets.</p>
+<p>Examples:</p>
+<ul>
+<li>India is strongly Movie-oriented</li>
+<li>Pakistan is strongly TV Show-oriented</li>
+<li>South Korea is strongly TV Show-oriented</li>
+<li>Japan also has a majority TV Show mix</li>
+<li>The United States remains predominantly Movie-oriented</li>
+</ul>
+<p>This indicates that catalog composition is not uniform across markets.</p>
+<hr />
+<h2>8. Historical Trend Analysis</h2>
+<p>The number of titles in the dataset increases significantly in more recent release years.</p>
+<p>Movie growth is especially strong from the 2010s onward.</p>
+<p>TV Shows also increase substantially in more recent years, though Movies remain the larger category overall.</p>
+<p>A decline is visible in the final years of the dataset.</p>
+<p>This decline should be interpreted cautiously because the dataset ends in 2021 and may not represent a complete observation period for the most recent years.</p>
+<hr />
+<h2>9. Audience Analysis</h2>
+<p>Content ratings were grouped into analytical audience segments:</p>
+<ul>
+<li>Kids</li>
+<li>Family</li>
+<li>Teens &amp; Family</li>
+<li>Teens</li>
+<li>Mature</li>
+<li>Unrated</li>
+</ul>
+<p>The largest audience segments are:</p>
+<ol>
+<li>Mature</li>
+<li>Teens</li>
+<li>Teens &amp; Family</li>
+<li>Kids</li>
+<li>Family</li>
+<li>Unrated</li>
+</ol>
+<p>Mature content is the largest segment overall.</p>
+<p>The audience group classification was created for analytical purposes and is not an official Netflix audience segmentation system.</p>
+<hr />
+<h2>10. Genre Analysis</h2>
+<p>The most represented genres include:</p>
+<ul>
+<li>International Movies</li>
+<li>Dramas</li>
+<li>Comedies</li>
+<li>International TV Shows</li>
+<li>Documentaries</li>
+<li>Action &amp; Adventure</li>
+</ul>
+<p>Movie genres are dominated by:</p>
+<ul>
+<li>International Movies</li>
+<li>Dramas</li>
+<li>Comedies</li>
+</ul>
+<p>TV Show genres show broader representation across:</p>
+<ul>
+<li>International TV Shows</li>
+<li>TV Dramas</li>
+<li>TV Comedies</li>
+<li>Crime TV Shows</li>
+<li>Kids' TV</li>
+</ul>
+<p>This suggests that genre structure differs significantly between Movies and TV Shows.</p>
+<hr />
+<h2>11. Movie Duration Analysis</h2>
+<p>Average Movie duration:</p>
+<ul>
+<li>Approximately 99.6 minutes</li>
+</ul>
+<p>Median Movie duration:</p>
+<ul>
+<li>98 minutes</li>
+</ul>
+<p>Most Movies cluster around typical feature-film lengths.</p>
+<p>A small number of very short and very long titles create outliers.</p>
+<hr />
+<h2>12. TV Show Season Analysis</h2>
+<p>Average TV Show length:</p>
+<ul>
+<li>Approximately 1.75 seasons</li>
+</ul>
+<p>Median:</p>
+<ul>
+<li>1 season</li>
+</ul>
+<p>Most TV Shows contain one or two seasons.</p>
+<p>This indicates that the catalog contains a large number of relatively short TV series.</p>
+<hr />
+<h2>13. Content Age Analysis</h2>
+<p>Content age measures the number of years between release and Netflix addition.</p>
+<p>The distribution is:</p>
+<ul>
+<li>Same Year: 36.90%</li>
+<li>1–2 Years: 26.17%</li>
+<li>3–5 Years: 12.73%</li>
+<li>6–10 Years: 10.46%</li>
+<li>10+ Years: 13.74%</li>
+</ul>
+<p>Approximately 63% of titles were added to Netflix within two years of release.</p>
+<p>This suggests that the catalog is strongly concentrated around relatively recent content while still maintaining a meaningful long-tail of older titles.</p>
+<hr />
+<h2>14. Market Audience Mix</h2>
+<p>Audience composition differs significantly across major markets.</p>
+<p>Examples include:</p>
+<ul>
+<li>Spain has a strong Mature-content concentration</li>
+<li>Mexico is also heavily Mature-oriented</li>
+<li>India has a strong Teen-content concentration</li>
+<li>Pakistan has a relatively higher Kids share compared with many other major markets</li>
+<li>Japan and South Korea show a more balanced split between Mature and Teen content</li>
+</ul>
+<p>These differences indicate that market-level catalog composition varies substantially.</p>
+<hr />
+<h2>15. Interactive Dashboard</h2>
+<p>The Streamlit dashboard provides:</p>
+<ul>
+<li>Executive KPI cards</li>
+<li>Content-type analysis</li>
+<li>Market distribution</li>
+<li>Movies vs TV Shows by market</li>
+<li>Historical trends</li>
+<li>Audience analysis</li>
+<li>Genre analysis</li>
+<li>Movie duration analysis</li>
+<li>TV Show season analysis</li>
+<li>Content age analysis</li>
+<li>Market audience heatmap</li>
+<li>Dynamic business insights</li>
+<li>Interactive filtering</li>
+<li>Filtered data exploration</li>
+<li>CSV download</li>
+</ul>
+<p>Dashboard filters include:</p>
+<ul>
+<li>Content Type</li>
+<li>Country</li>
+<li>Audience Group</li>
+<li>Release Year</li>
+</ul>
+<p>All major KPIs and analytical views update dynamically based on selected filters.</p>
+<hr />
+<h2>16. Business Interpretation</h2>
+<p>The analysis suggests that Netflix's catalog structure, as represented in this historical dataset, is highly segmented by market, audience type, genre, and content format.</p>
+<p>Key strategic observations include:</p>
+<ul>
+<li>Movies dominate the catalog overall</li>
+<li>Market content strategies vary significantly</li>
+<li>Mature and Teen-oriented content represent the largest audience segments</li>
+<li>TV Shows show stronger concentration in recent-release content</li>
+<li>Different markets exhibit distinct audience and content-format profiles</li>
+<li>Genre composition differs substantially between Movies and TV Shows</li>
+</ul>
+<p>These findings can support content portfolio analysis and market-level content planning.</p>
+<hr />
+<h2>17. Limitations</h2>
+<p>This analysis is based only on catalog metadata.</p>
+<p>The dataset does not contain:</p>
+<ul>
+<li>Viewing behavior</li>
+<li>Watch time</li>
+<li>Revenue</li>
+<li>Subscriber counts</li>
+<li>Completion rates</li>
+<li>Content cost</li>
+<li>Licensing cost</li>
+<li>User demographics</li>
+<li>Recommendation data</li>
+</ul>
+<p>Therefore, the project can analyze catalog structure and content strategy patterns, but it cannot directly measure:</p>
+<ul>
+<li>Content performance</li>
+<li>Viewer preference</li>
+<li>Profitability</li>
+<li>User engagement</li>
+<li>Commercial success</li>
+</ul>
+<hr />
+<h2>18. Conclusion</h2>
+<p>This project transforms raw Netflix catalog metadata into a structured analytical product combining data cleaning, exploratory analysis, business interpretation, and interactive dashboarding.</p>
+<p>The final result provides a portfolio-level view of Netflix content across markets, audience groups, genres, time periods, and content formats.</p>
+<p>The project demonstrates an end-to-end data analysis workflow from raw data preparation to interactive business intelligence.</p>
+
+</body>
+</html>
