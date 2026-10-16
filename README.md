@@ -1,4 +1,7 @@
 # Netflix Content Portfolio Intelligence
+## Live Dashboard
+
+[Open Interactive Dashboard](https://netflix-content-portfolio.streamlit.app/)
 ![Dashboard Overview](assets/screenshots/dashboard_overview.png)
 An end-to-end data analysis project built with Python and Streamlit to explore Netflix content strategy, market distribution, audience segments, genres, historical trends, and content characteristics.
 
